@@ -1,16 +1,28 @@
 import React, { FC } from 'react';
-import { useInput } from './hooks/useInput/useInput';
+import useTabs from './hooks/useTabs';
+
+const fetchContent = [
+    {
+        tab: 'Part 1',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    },
+    {
+        tab: 'Part 2',
+        text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco',
+    },
+];
 
 export const App: FC = () => {
-    const checkMaxLength = (value: string) => value.length <= 10;
-    const checkAt = (value: string) => !value.includes('@', 1);
-    const name = useInput('Mr.', checkMaxLength);
-    const email = useInput('@', checkAt);
+    const { currentItem, changeItem } = useTabs(0, fetchContent);
 
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <input type="text" placeholder="Name" {...name} />
-            <input type="text" placeholder="Email" {...email} />
+            {fetchContent?.map(({ tab }, idx) => (
+                <button key={idx} onClick={() => changeItem(idx)}>
+                    {tab}
+                </button>
+            ))}
+            <div>{currentItem.text}</div>
         </div>
     );
 };
