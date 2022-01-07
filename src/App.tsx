@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import useClick from './hooks/useClick';
+import useHover from './hooks/useHover';
 
 export const App: FC = () => {
-    const onClick = () => console.log('Click on Title');
-    const titleRef = useClick<HTMLHeadingElement>(onClick);
+    const onHover = () => console.log('Hover on Title');
+    const titleRef = useHover<HTMLHeadingElement>(onHover);
 
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
