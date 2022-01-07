@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
-import useHover from './hooks/useHover';
+import useConfirm from './hooks/useConfirm';
 
 export const App: FC = () => {
-    const onHover = () => console.log('Hover on Title');
-    const titleRef = useHover<HTMLHeadingElement>(onHover);
+    const deleteSomething = () => console.log('Something was deleted');
+    const abortDeleting = () => console.log('Abort deleting');
+    const confirmDelete = useConfirm('Are you sure?', deleteSomething, abortDeleting);
 
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <h1 ref={titleRef}>Title</h1>
+            <button onClick={confirmDelete}>Delete something</button>
         </div>
     );
 };
