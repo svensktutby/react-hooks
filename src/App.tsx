@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
-import useConfirm from './hooks/useConfirm';
+import usePreventLeave from './hooks/usePreventLeave';
 
 export const App: FC = () => {
-    const deleteSomething = () => console.log('Something was deleted');
-    const abortDeleting = () => console.log('Abort deleting');
-    const confirmDelete = useConfirm('Are you sure?', deleteSomething, abortDeleting);
+    const { disablePrevent, enablePrevent } = usePreventLeave();
 
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <button onClick={confirmDelete}>Delete something</button>
+            <button onClick={enablePrevent}>Protect</button>
+            <button onClick={disablePrevent}>Unprotect</button>
         </div>
     );
 };
