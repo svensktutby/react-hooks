@@ -1,13 +1,16 @@
 import React, { FC } from 'react';
-import usePreventLeave from './hooks/usePreventLeave';
+import useBeforeLeave from './hooks/useBeforeLeave';
 
 export const App: FC = () => {
-    const { disablePrevent, enablePrevent } = usePreventLeave();
+    const callback = () => {
+        confirm('Do you really want to leave the site');
+    };
+
+    useBeforeLeave(callback);
 
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <button onClick={enablePrevent}>Protect</button>
-            <button onClick={disablePrevent}>Unprotect</button>
+            App
         </div>
     );
 };
