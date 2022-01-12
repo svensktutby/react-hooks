@@ -1,15 +1,12 @@
 import React, { FC } from 'react';
-import useNetwork from './hooks/useNetwork';
+import useScroll from './hooks/useScroll';
 
 export const App: FC = () => {
-    const handleOnlineChange = (online: boolean) => console.log(online ? 'Online' : 'Offline');
-    type UseNetworkCallback = typeof handleOnlineChange;
-
-    const isOnline = useNetwork<UseNetworkCallback>(handleOnlineChange);
+    const { y } = useScroll();
 
     return (
-        <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <h1>{isOnline ? 'Online' : 'Offline'}</h1>
+        <div className="app" style={{ width: 600, height: '1000vh', margin: '0 auto' }}>
+            <h1 style={{ position: 'fixed', color: y > 100 ? 'red' : 'green' }}>Title</h1>
         </div>
     );
 };
