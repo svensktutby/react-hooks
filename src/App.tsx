@@ -1,32 +1,22 @@
-import React, { FC, useState } from 'react';
-import { useNotifications } from './hooks/useNotifications/useNotifications';
+import React, { FC } from 'react';
+import useAxios from './hooks/useAxios';
+
+const url = 'https://yts.mx/api/v2/list_movies.json';
 
 export const App: FC = () => {
-    const [notificationTitle, setNotificationTitle] = useState('');
-    const [notificationBody, setNotificationBody] = useState('');
-    const showNotification = useNotifications(notificationTitle, { body: notificationBody });
+    const { loading, error, data, refetch } = useAxios(url);
 
+    console.log({ loading, error, data });
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <label style={{ display: 'block' }}>
-                Title
-                <input
-                    type="text"
-                    value={notificationTitle}
-                    onChange={({ target: { value } }) => setNotificationTitle(value)}
-                />
-            </label>
-            <label style={{ display: 'block' }}>
-                Body
-                <input
-                    type="text"
-                    value={notificationBody}
-                    onChange={({ target: { value } }) => setNotificationBody(value)}
-                />
-            </label>
-            <div>
-                <button onClick={showNotification}>Show notification</button>
-            </div>
+            <h1>{data && data.status}</h1>
+            {error && <h2 style={{ color: 'coral' }}>{error.message}</h2>}
+            <h2>{loading ? 'Loading...' : 'Loading finished'}</h2>
+            <p>
+                <b>Movie count:</b>&nbsp;{data && data.data.data.movie_count}
+            </p>
+
+            <button onClick={refetch}>Reload data</button>
         </div>
     );
 };
