@@ -1,27 +1,32 @@
-import React, { FC } from 'react';
-import useFullScreen from './hooks/useFullScreen';
+import React, { FC, useState } from 'react';
+import { useNotifications } from './hooks/useNotifications/useNotifications';
 
 export const App: FC = () => {
-    const onFullScreen = (isFullScreen: boolean) => {
-        console.log(isFullScreen ? 'Full Screen' : 'Not Full Screen');
-    };
-    type UseFullScreenCallback = typeof onFullScreen;
-
-    const { elementRef, setFullScreen, exitFullScreen } = useFullScreen<HTMLDivElement, UseFullScreenCallback>(
-        onFullScreen,
-    );
+    const [notificationTitle, setNotificationTitle] = useState('');
+    const [notificationBody, setNotificationBody] = useState('');
+    const showNotification = useNotifications(notificationTitle, { body: notificationBody });
 
     return (
         <div className="app" style={{ width: 600, margin: '0 auto' }}>
-            <div ref={elementRef} style={{ position: 'relative' }}>
-                <img src={'https://placekitten.com/640/360'} width="100%" alt="" />
-                <button type="button" onClick={exitFullScreen} style={{ position: 'absolute', left: 0 }}>
-                    Exit Full Screen
-                </button>
+            <label style={{ display: 'block' }}>
+                Title
+                <input
+                    type="text"
+                    value={notificationTitle}
+                    onChange={({ target: { value } }) => setNotificationTitle(value)}
+                />
+            </label>
+            <label style={{ display: 'block' }}>
+                Body
+                <input
+                    type="text"
+                    value={notificationBody}
+                    onChange={({ target: { value } }) => setNotificationBody(value)}
+                />
+            </label>
+            <div>
+                <button onClick={showNotification}>Show notification</button>
             </div>
-            <button type="button" onClick={setFullScreen}>
-                Full Screen
-            </button>
         </div>
     );
 };
